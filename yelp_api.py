@@ -13,9 +13,9 @@ TOKEN_SECRET = os.environ['TOKEN_SECRET']
 
 location = "location=San+Francisco,CA,USA"
 term = "term=tacos"
-limit = 1
+limit = 10
 
-yelp = YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
+yelp_api = YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
 search_results = yelp_api.search_query(location=location, term=term, limit=limit)
 printer = pprint.PrettyPrinter()
 printer.pprint(search_results)
