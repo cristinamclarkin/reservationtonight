@@ -20,7 +20,7 @@ class Restaurant(db.Model):
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     restaurant_url = db.Column(db.String(40), nullable=True)
-
+    rest_category = db.Column(db.String(40), nullable=True) 
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
@@ -29,8 +29,8 @@ class Reservation(db.Model):
     restaurant_id = db.Column(db.Integer, foreign_key=True)
     ***user_id= db.Column(db.Integer, foreign_key=True, nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    party_size = db.Column(db.)
-    status =
+    party_size = db.Column(db.Integer, nullable=False)
+    reservation_status = db.Column(db.String(10), nullable=False)
 
 
 class User(db.Model):
@@ -53,14 +53,15 @@ class User(db.Model):
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
-    """Connect the database to our Flask app."""
+def connect_to_db(app, db_uri='postgresql:///'):
+    """Connect database to Flask app."""
 
-    # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///haven'
+    # Configure to use PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    app.config['SQLAlCHEMY_ECHO'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
-
 
 if __name__ == "__main__":
     # if run interactively, this will allow access of the db
