@@ -10,8 +10,8 @@ db = SQLAlchemy()
 class Restaurant(db.Model):
     __tablename__ = "restaurants"
 
-    restaurant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    yelp_id = db.Column(db.String(50), unique=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    yelp_id = db.Column(db.String(50), unique=True, nullable=True)
     restaurant_name = db.Column(db.String(50), nullable=True)
     address_line_1 = db.Column(db.String(30), nullable=True)
     address_line_2 = db.Column(db.String(30), nullable=True)
@@ -20,41 +20,63 @@ class Restaurant(db.Model):
     telephone = db.Column(db.String(15), nullable=True)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
-    yelp_url = db.Column(db.String(40), nullable=True)
+    yelp_url = db.Column(db.String(200), nullable=True)
 
-    categories = db.relationship("Category",
-                             secondary="restaurant_categories",
-                             backref="restaurants")
+    categories = db.relationship("Category", secondary="restaurant_categories", backref="restaurants")
+
+    # def __repr__(self):
+    #     """Show info about a restaurant."""
+
+    #     return "<Restaurant id=%s restaurant_name=%s telephone=%s yelp_url=%s>" % (
+    #         self.id, self.restaurant_name, self.telephone, self.yelp_url)
 
 class Category(db.Model):
     __tablename__ = "categories"
 
-    category_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     category_name =db.Column(db.String(40), nullable=True)
+
+    # def __repr__(self):
+    #     """Show info about a restaurant."""
+
+    #     return "<Category id=%s category_name=%s >" % (
+    #         self.id, self.category_name)
 
 
 class RestaurantCategory(db.Model):
     __tablename__ = "restaurant_categories"
 
-    restaurantcategory_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'), nullable=False)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+
+    # def __repr__(self):
+    #     """Show info about a restaurant."""
+
+    #     return "<Category id=%s category_id=%s restaurant_id%s>" % (
+    #         self.id, self.category_id, self.restaurant_id)
 
 
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
 
-    reservation_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'),nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'),nullable=False)
     user_id= db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    timestamp = db.Column(db.String(10), nullable=False)
     party_size = db.Column(db.Integer, nullable=False)
-    reservation_status = db.Column(db.String(10), nullable=False)
+    reservation_status = db.Column(db.Boolean, nullable=False)
 
     
     restaurant = db.relationship('Restaurant', backref='reservations')
     user = db.relationship  ('User', backref='reservations')
+
+    # def __repr__(self):
+    #     """Show info about a restaurant."""
+
+    #     return "<Category id=%s category_id=%s restaurant_id%s>" % (
+    #         self.id, self.restaurant_id, self.user_id, self.restaurant_timestamp, self.party_size, self.reservation_status)
 
 
 class User(db.Model):
@@ -64,6 +86,12 @@ class User(db.Model):
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(15), nullable=False)
     user_telephone = db.Column(db.String(100), nullable=True)
+
+    # def __repr__(self):
+    #     """Show info about a restaurant."""
+
+    #     return "<Category id=%s category_id=%s restaurant_id%s>" % (
+    #         self.id, self.email, self.password, self.user_telephone)
 
     
 
