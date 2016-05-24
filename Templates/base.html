@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>Reservation Tonight!</title>
+</head>
+<body>
+
+Reservation Tonight
+
+{% if "user_id" in session %}
+    <a href="/logout">Logout</a>
+{% else %}
+    <a href="/login">Login</a>
+{% endif %}
+
+<hr>
+
+{% for flash in get_flashed_messages() %}
+  {{ flash }}
+{% endfor %}
+
+{% block content %}
+    Put your body here.
+{% endblock %}
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

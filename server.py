@@ -34,14 +34,14 @@ def index():
 @app.route('/user_register', methods=['GET'])
 def user_register_form():
     """Show form for user signup."""
-
+    print "user_register"
     return render_template("user_register_form.html")
 
 
 @app.route('/user_register', methods=['POST'])
 def process_registration():
     """Process registration."""
-
+    
     # Get form variables
     email = request.form["email"]
     password = request.form["password"]
@@ -53,7 +53,7 @@ def process_registration():
     db.session.commit()
 
     flash("User %s added." % email)
-    return redirect("/search")
+    return redirect("/")
 
 
 @app.route('/user_login', methods=['GET'])
@@ -84,7 +84,7 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("You are now logged in")
-    return redirect("/search")
+    return redirect("/")
 
 
 @app.route('/user_logout')
@@ -204,105 +204,7 @@ def process_user_search():
 
     return render_template("search_results_form.html", user_party_size=user_party_size, matching_reservations=matching_reservations,
                             user_timestamp=user_timestamp, category_name=category_name, category_id=category_id, rest_info_list=rest_info_list)
-    # for reservation in open_reservations:
-    #     if reservation.party_size < user_party_size:
-    #         print "%s, %s" % (reservation.party_size, user_party_size)
-    #         continue
-
-    #     # if reservation.timestamp != user_timestamp:
-    #     #     print "%s, %s" % (reservation.timestamp, user_timestamp)
-    #     #     continue
-    #     # print "Here!"
-    #     searched_cuisine = db.session.query(Category).join(RestaurantCategory).\
-    #         filter(RestaurantCategory.restaurant_id==reservation.restaurant_id).all()
-
-    #     for search in searched_cuisine:
-    #         if search.category_name != category_name:
-    #             print "%s, %s" % (search.category_name, category_name)
-    #             continue
-    #         else:
-    #             # new_search = Reservation(timestamp=user_timestamp, party_size=user_party_size)
-    #             print "Found reservation %s" % reservation.id
-    #             #flash("Reservation %s added." % new_reservation)
-    #             break
-
-    # return redirect("/results_form.html")
-
-        # SELECT categories.category_name FROM restaurant_categories JOIN categories ON restaurant_categories.category_id = categories.id WHERE restaurant_categories.id =7;
-        # print reservation.timestamp
-        # print reservation.party_size 
-        # return reservation.timestamp, reservation.party_size
-
-  
-    #     find party_size, category_name, timestamp
-
-
-    # open_reservations = db.session.query(Reservation.party_size,
-    #                         Reservation.timestamp,
-    #                         Reservation.reservation_status).join(RestaurantCategory).all()
-
-    # open_reservations = db.session.query
-
-    # for reservation in open_reservations:
-    #     if Reservation.reservation_status != False and Reservation
-
-
-
-# @app.route('/results')
-# def display_search_results():
-# """displays open reservations matching party-size, time, and cuisine"""
-
-
-
-
-# @app.route('/reserve', methods =['GET'])
-# def display_reservation_form():
-
-
-# @app.route('/reserve', methods =['POST'])
-# def process_reservation_form():
-
-
-#     user_cuisine = request.form["cuisine"]
-#     party_size = request.form["party_size"]
-#     # zipcode = request.form["zipcode"]
-
-#     restaurant_results = yelp.get_results(location=location, term=term)
-#     print results
-#     return jsonify(results=results)
-
-#     user_results = filter_by_category(user_cuisine)
-
-#     category_results = user_results['businesses'][0:20]
-#     restaurant_results = Reservation.query.filter(reservation_status==reservation_status, category_name==category_name).all()
-
-#     for cuisine in cuisines_list:
-#     results = filter_by_category(cuisine)
-#     load_restaurants(results)
-
-#     return render_template("results.html",
-#                        result=result,
-#                        key=BROWSER_KEY,
-#                        result_dict=result_dict,
-#                        search_term=search_term,
-#                        location_term=location_term)
-
-
-# @app.route('/new_user_reservation', methods=['POST'])
-# def process_new_reservation():
-#     """processes new reservation slot."""
-
-#     timestamp = request.form["timestamp"]
-#     party_size = request.form["party_size"]
-
-#     new_reservation = Reservation(timestamp=timestamp, party_size=party_size)
-
-#     db.session.add(new_reservation)
-#     db.session.commit()
-
-#     flash("Reservation %s added." % new_reservation)
-#     #would like to have something that asks. Make another reservation?
-#     return redirect("/")
+    
 
 
 if __name__ == "__main__":

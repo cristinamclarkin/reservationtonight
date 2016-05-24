@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Search By Restaurant Name:</h1>
+    
+    <form action="/restaurant_login" method="POST">
+
+        <div>
+            <label>Restauarant Name:
+                <input type="restaurant_name" name="restaurant_name" required>
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Search">
+        </div>
+
+    </form>
+{% endblock %}

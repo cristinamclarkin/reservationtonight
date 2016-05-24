@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Create a new reservation:</h1>
+
+    <h2> {{ restaurant_id }} </h2>
+    
+    <form action="/new_reservation/{{ restaurant_id }}" id="reservationForm" method="POST">
+
+        <div>
+            <label>Party Size:
+                <input type="party_size" name="party_size" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                <select type="timestamp" name="timestamp" form="reservationForm" required>
+                    <option value="5 pm">5 pm</option>
+                    <option value="6 pm">6 pm</option>
+                    <option value="7 pm">7 pm</option>
+                    <option value="8 pm">8 pm</option>
+                    <option value="9 pm">9 pm</option>
+                    <option value="10 pm">10 pm</option>
+                </select>
+            </label>
+            <input type="submit" value="Submit">
+        </div>
+
+
+
+    </form>
+{% endblock %}

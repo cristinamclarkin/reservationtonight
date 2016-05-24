@@ -48,10 +48,10 @@ def load_restaurants(results):
         new_restaurant = Restaurant(restaurant_name=restaurant_name, 
                                     address_line_1=address_line_1, 
                                     address_line_2=address_line_2,
-                                    city=city
+                                    city=city,
                                     zipcode=zipcode,
                                     telephone=telephone,
-                                    latitude=latitude
+                                    latitude=latitude,
                                     longitude=longitude,
                                     yelp_url=yelp_url)
                                     

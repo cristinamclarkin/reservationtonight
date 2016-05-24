@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for restaurant in rest_info_list %}
+      <h1>{{ restaurant.restaurant_name }}</h1>
+      
+         <h3>{{ restaurant.address_line_1 }}</h3>
+         <h3>{{ restaurant.address_line_2 }}</h3>
+         <h3>{{ restaurant.zipcode }}</h3>
+         <h3>{{ restaurant.telephone }}</h3>
+        <!--  <h3>{{ restaurant.yelp_url }}</h3> -->
+        <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
+
+
+    {% endfor %}
+
+
+
+{% endblock %}

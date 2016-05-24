@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Search for open reservations:</h1>
+
+    
+    <form action="/search" id="search-form" method="POST">
+
+        <div>
+            <label>Party Size:
+                <input type="party_size" name="party_size" required>
+            </label>
+        </div>
+        <div>
+            <label>Time:
+                <select type="timestamp" name="timestamp" form="search-form" required>
+                    <option value="5 pm">5 pm</option>
+                    <option value="6 pm">6 pm</option>
+                    <option value="7 pm">7 pm</option>
+                    <option value="8 pm">8 pm</option>
+                    <option value="9 pm">9 pm</option>
+                    <option value="10 pm">10 pm</option>
+                </select>
+            </label>
+        <div>
+             <label>Cuisine:
+                <select type="cuisine" name="cuisines" form="search-form" required>
+                    <option value="mexican">Mexican</option>
+                    <option value="italian">Italian</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="french">French</option>
+                    <option value="korean">Korean</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="indpak">Indian/Pakistani</option>
+                    <option value="ethiopian">Ethiopian</option>
+                </select>
+            </label>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+
+
+
+    </form>
+{% endblock %}
