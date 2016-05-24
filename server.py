@@ -41,7 +41,7 @@ def user_register_form():
 @app.route('/user_register', methods=['POST'])
 def process_registration():
     """Process registration."""
-    
+
     # Get form variables
     email = request.form["email"]
     password = request.form["password"]
@@ -53,7 +53,7 @@ def process_registration():
     db.session.commit()
 
     flash("User %s added." % email)
-    return redirect("/")
+    return redirect("/search")
 
 
 @app.route('/user_login', methods=['GET'])
@@ -84,7 +84,7 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("You are now logged in")
-    return redirect("/")
+    return redirect("/search")
 
 
 @app.route('/user_logout')
@@ -204,7 +204,21 @@ def process_user_search():
 
     return render_template("search_results_form.html", user_party_size=user_party_size, matching_reservations=matching_reservations,
                             user_timestamp=user_timestamp, category_name=category_name, category_id=category_id, rest_info_list=rest_info_list)
+
+
+
+@app.route('/reserve/<int:reservation_id>', methods=['POST'])
+def reserve_time(reservation_id):
+    """Find the restaurant by restaurant id, change reservation_status to False, update in db"""
+    restaurant_to_reserve = db.session.query(Reservation).filter_by(id=reservation_id).update({'reservation_status':False})
     
+    db.session.commit()
+
+    print "added reservation"
+    return redirect('/')
+    
+
+
 
 
 if __name__ == "__main__":

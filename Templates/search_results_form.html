@@ -10,6 +10,11 @@
          <h3>{{ restaurant.telephone }}</h3>
         <!--  <h3>{{ restaurant.yelp_url }}</h3> -->
         <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
+        <form action= "/reserve/{{ restaurant.id }}" id="reserve" method="POST">
+          <div>
+              <input type="submit" value="Reserve">
+          </div>
+        </form>
 
 
     {% endfor %}

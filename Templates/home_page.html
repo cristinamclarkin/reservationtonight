@@ -1,81 +1,17 @@
-
-
 {% extends 'base.html' %}
-{% block head %}
+{% block content %}
 
-  <title>Reservations Tonight</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <style>
-    body {
-      background-image: url("http://payload403.cargocollective.com/1/6/213784/10366094/Neon-7_900.jpg");
-      background-size: cover;
-    }
-  </style>
+  <h1>Reservations Tonight</h1>
+  <h2> Register or Sign in:</h2>
 
+  <h2>Register</h2>
+  <p><a href="/user_register">User Register</a></p>
+  
+  <h2>User Login</h2>
+  <p><a href="/user_login">User Login</a></p>
+
+  <h2>Restaurant Login</h2>
+  <p><a href="/restaurant_login">Restaurant Login</a></p>
 
 {% endblock %}
-
-{% block body %}
-
-
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 center-block">
-        <h1 id="home-header" class="header-text">Reservations Tonight</h1>
-
-        <form id="search-form" class="form-inline" action="/search" method="GET">
-          
-          <div class="input-group form-group">
-            <span class="input-group-addon" id="for-restaurant">How many?</span>
-            <input type="text" class="form-control" id="keyword-input" name="keyword" 
-              placeholder="Party Size" aria-describedby="for-restaurant" required>
-          </div>
-          
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              What Time?
-              <span class="caret"></span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <select type="timestamp" name="timestamp" form="search-form" required>
-                  <option value="6 pm">6 pm</option>
-                  <option value="7 pm">7 pm</option>
-                  <option value="8 pm">8 pm</option>
-                  <option value="9 pm">9 pm</option>
-                  <option value="10 pm">10 pm</option>
-            </select>
-            </div>
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Which Cuisine?
-                <span class="caret"></span>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                
-                <select type="cuisine" name="cuisines" form="search-form" required>
-                    <option value="mexican">Mexican</option>
-                    <option value="italian">Italian</option>
-                    <option value="chinese">Chinese</option>
-                    <option value="french">French</option>
-                    <option value="korean">Korean</option>
-                    <option value="japanese">Japanese</option>
-                    <option value="indpak">Indian/Pakistani</option>
-                    <option value="ethiopian">Ethiopian</option>
-                </select>
-              </select>
-            </div>
-
-          <button type="submit" class="btn btn-primary">Let's see!</button>
-        </form>
-      </div> <!-- center-block -->
-    </div> <!-- row -->
-  </div> <!-- container-fluid -->
-
-  {% endblock %}
-
-
-
-
- 
-
 
