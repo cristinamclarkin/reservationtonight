@@ -3,10 +3,6 @@ html, body {
   height: 100%;
 }
 
-body {
-  font-family: Raleway, sans-serif;
-}
-
 .header-text{
   font-weight: 900;
   text-align: center;
@@ -63,12 +59,46 @@ body {
   color: #FFFFFF;
   background-color: #e73f3f;
   border-color: #c31502;
+  margin-right: 15%;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
   color: #FFFFFF !important;
   background-color: #c31502 !important;
   border-color: #c31502 !important;
 }
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #e3e3e3;
+  font-family: Raleway, sans-serif;
+}
+ 
+.carousel {
+  height: 500px;
+  margin-bottom: 60px;
+}
+.carousel .item {
+  height: 500px;
+  background-color: #777;
+}
+/*.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}*/
+.search {
+  margin-top: 32%;
+  margin-left: 10%;
+}
+/*.search .form-section{
+  background:rgba(0,0,0,0.6);
+  border: 2px solid #414141;
+  border-radius: 5px;
+  padding: 10px;
+}*/
 
 @media only screen and (max-width: 500px) {
   #home-header {

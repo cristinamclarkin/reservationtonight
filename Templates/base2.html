@@ -1,100 +1,26 @@
-<!doctype html>
-<html>
-<head>
-    <title>Reservation Tonight!</title>
-</head>
-<body>
-
-Reservation Tonight
-
-{% if "user_id" in session %}
-    <a href="/logout">Logout</a>
-{% else %}
-    <a href="/login">Login</a>
-{% endif %}
-
-<hr>
-
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %}
-
-{% block content %}
-    Put your body here.
-{% endblock %}
-
-</body>
-</html>
-
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/css/style.css">
-  <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
-
-  {% block head %}
-  {% endblock %}
-
-  
-
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
-          data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/"><img id="logo" src="/Static/images/reservation_tonight_logo.png"></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="light-text"><a href="/user_login">User Sign In<a></li>
-        </ul>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="light-text"><a href="/restaurant_login">Restaurant Sign In<a></li>
-        </ul>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="light-text"><a href="/user_register">Register<a></li>
-        </ul>
-      </div><!-- navbar-collapse -->
-    </div><!-- container-fluid -->
-  </nav>
-
-  <div id="flash">
-    <p>
-      {% for message in get_flashed_messages() %}
-        {{ message }}
-      {% endfor %}
-    </p>
-  </div>
-
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <body>
 
 
-  {% block body %}
+    Reservation Tonight
+
+    {% if "user_id" in session %}
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}
+
+    <hr>
+
+    {% for flash in get_flashed_messages() %}
+        {{ flash }}
+    {% endfor %}
+
     {% block content %}
+    Put your body here.
     {% endblock %}
 
-  {% endblock %}
-
-</body>
-</html>
+    </body>
+    </html>

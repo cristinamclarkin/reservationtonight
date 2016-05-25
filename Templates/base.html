@@ -1,47 +1,60 @@
-<!doctype html>
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Reservation Tonight!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+
+  {% block head %}
+  {% endblock %}
+
+
 </head>
 <body>
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img id="logo" src="/Static/images/reservation_tonight_logo.png"></a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/user_register">Register</a></li>
+        <li><a href="/user_login">User Sign In</a></li>
+        <li><a href="/restaurant_login">Restaurant Sign In</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
 
-Reservation Tonight
+<div class="container">
+  
+  
+</div>
+<div id="flash">
+    <p>
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+    </p>
+  </div>
 
-{% if "user_id" in session %}
-    <a href="/logout">Logout</a>
-{% else %}
-    <a href="/login">Login</a>
-{% endif %}
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<hr>
 
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %}
-
-{% block content %}
-    Put your body here.
-{% endblock %}
-
+  {% block content %}
+  {% endblock %}
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
 
 

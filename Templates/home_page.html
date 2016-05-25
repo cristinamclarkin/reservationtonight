@@ -1,17 +1,106 @@
+
 {% extends 'base.html' %}
-{% block content %}
+{% block head %}
 
-  <h1>Reservations Tonight</h1>
-  <h2> Register or Sign in:</h2>
+  <title>Reservations Tonight</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    body {
+      background-image: url("http://payload403.cargocollective.com/1/6/213784/10366094/Neon-7_900.jpg");
+      background-size: cover;
+    }
+  </style>
 
-  <h2>Register</h2>
-  <p><a href="/user_register">User Register</a></p>
-  
-  <h2>User Login</h2>
-  <p><a href="/user_login">User Login</a></p>
-
-  <h2>Restaurant Login</h2>
-  <p><a href="/restaurant_login">Restaurant Login</a></p>
 
 {% endblock %}
+
+{% block content %}
+
+<form action="/search" id="search-form" method="GET">
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 center-block">
+        <h1 id="home-header" class="header-text">Reservations Tonight</h1>
+    </div>
+    <div class="search">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-section">
+                <div class="row">
+                    <form role="form">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="sr-only" for="party_size">Party Size</label>
+                          <input type="text" class="form-control" id="party_size" placeholder="Party Size">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label class="sr-only" for="cuisine">Cuisine</label>
+                          <select id="cuisine" name="cuisines" form="search-form" class="form-control">required>
+                              <option value="mexican">Mexican</option>
+                              <option value="italian">Italian</option>
+                              <option value="chinese">Chinese</option>
+                              <option value="french">French</option>
+                              <option value="korean">Korean</option>
+                              <option value="japanese">Japanese</option>
+                              <option value="indpak">Indian/Pakistani</option>
+                              <option value="ethiopian">Ethiopian</option>
+                          </select>
+                        </div>
+                      </div>
+                        <div class="col-md-2">
+                        <div class="form-group">
+                          <label class="sr-only" for="timestamp">What Time?</label>
+                          <select id="cuisine" name="cuisines" form="search-form" class="form-control">required>
+                              <option value="5 pm">5 pm</option>
+                              <option value="6 pm">6 pm</option>
+                              <option value="7 pm">7 pm</option>
+                              <option value="8 pm">8 pm</option>
+                              <option value="9 pm">9 pm</option>
+                              <option value="10 pm">10 pm</option>
+                              <option value="11 pm">11 pm</option>
+                          </select>
+                        </div>
+                      </div>
+                              
+
+                      <div class="col-md-2">
+                        <button type="submit" class="btn btn-default btn-primary">Search</button>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
