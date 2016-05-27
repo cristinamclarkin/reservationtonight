@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Google Map: Results Page</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js" crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAMg1Z6_0caEe3tIppNsJViX9KGSBSL3A&callback=initMap" async defer></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+              }
+              #my-map {
+                height: 500px;
+              }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+        <span class="marker-me" data-lng="-122.411540" data-lat="37.788862">Hackbright Academy</span>
+        <script>
+            var map;
+            var marker;
+            console.log(marker)
+            function initMap(){
+                map = new google.maps.Map(
+                document.getElementById('my-map'), 
+                {
+                    center: {lat: 37.788862, lng: -122.411540},
+                    zoom: 13
+                });
+                
+            }
+            
+            function addMarker(evt){
+                var latFromDom = $(this).data('lat');
+                console.log(latFromDom)
+                var lngFromDom = $(this).data('lng');
+                console.log(lngFromDom)
+                var myLatLng = {lng: Number(lngFromDom), lat: Number(latFromDom)};
+                console.log(myLatLng)
+                marker = new google.maps.Marker(
+                        {
+                            position: myLatLng,
+                            map: map,
+                            title: 'Hello World!'
+                        }
+                );
+                console.log(marker)
+            }
+            function removeMarkers(evt){
+                marker.setMap(null);
+            }
+            $('.marker-me').on('mouseover', addMarker);
+            $('.marker-me').on('mouseout', removeMarkers);
+        </script>
+    </body>
+</html>
