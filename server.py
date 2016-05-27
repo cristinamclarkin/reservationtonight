@@ -8,6 +8,8 @@ from jinja2 import StrictUndefined
 from model import connect_to_db, db, Restaurant, Reservation, User, Category, RestaurantCategory
 from yelpapi import YelpAPI
 from yelp_api import filter_by_category
+from werkzeug.contrib.cache import SimpleCache
+cache = SimpleCache()
 #from google_api import BROWSER_KEY
 
 
@@ -53,7 +55,7 @@ def process_registration():
     db.session.commit()
 
     flash("User %s added." % email)
-    return redirect("/search")
+    return redirect("/")
 
 
 @app.route('/user_login', methods=['GET'])
@@ -84,7 +86,7 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("You are now logged in")
-    return redirect("/search")
+    return redirect("/")
 
 
 @app.route('/user_logout')
@@ -156,25 +158,25 @@ def process_new_reservation(restaurant_id):
     return redirect("/")
     
 
+# @app.route('/search', methods=['GET'])
+# def user_search():
+#     """renders user search form"""
+
+#     user_id = session.get("user_id")
+#     if not user_id:
+#         raise Exception("No user logged in.")
+
+#     return render_template("search_form.html")
+
+
 @app.route('/search', methods=['GET'])
-def user_search():
-    """renders user search form"""
-
-    user_id = session.get("user_id")
-    if not user_id:
-        raise Exception("No user logged in.")
-
-    return render_template("search_form.html")
-
-
-@app.route('/search', methods=['POST'])
 def process_user_search():
     """processes user search form""" 
     
     print "Hello"
-    user_party_size = request.form.get("party_size")
-    user_timestamp = request.form.get("timestamp")
-    category_name = request.form.get("cuisines")
+    user_party_size = request.args.get("party_size")
+    user_timestamp = request.args.get("timestamp")
+    category_name = request.args.get("cuisines")
     category_id = db.session.query(Category).filter_by(category_name=category_name).one().id
     
     open_reservations = db.session.query(Reservation).filter_by(reservation_status=True, timestamp=user_timestamp, party_size=user_party_size).all()
@@ -217,6 +219,14 @@ def reserve_time(reservation_id):
     print "added reservation"
     return redirect('/')
     
+
+########################Helper fiunctions##################
+def get_bookmark():
+    rv = cache.get('reservation')
+    if rv is None:
+        rv = calculate_value()
+        cache.set('reservarion', rv, timeout=5 * 60)
+    return rv
 
 
 

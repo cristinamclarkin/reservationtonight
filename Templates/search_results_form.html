@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
+
     {% for restaurant in rest_info_list %}
-      <h1>{{ restaurant.restaurant_name }}</h1>
+        <h1 class="marker-me" data-lng="{{ restaurant.longitude }}" data-lat="{{ restaurant.latitude }}"> {{ restaurant.restaurant_name }}</h1>
       
          <h3>{{ restaurant.address_line_1 }}</h3>
          <h3>{{ restaurant.address_line_2 }}</h3>
@@ -12,12 +14,44 @@
         <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
         <form action= "/reserve/{{ restaurant.id }}" id="reserve" method="POST">
           <div>
-              <input type="submit" value="Reserve">
+              <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Reserve
+                <input type="submit" value="Reserve">
+              </button>
           </div>
+              <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Save
+              </button>
         </form>
 
 
     {% endfor %}
+
+<title>Google Map: Results Page</title>
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js" crossorigin="anonymous"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAMg1Z6_0caEe3tIppNsJViX9KGSBSL3A&callback=initMap" async defer></script>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #my-map {
+        height: 500px;
+        position: absolute;
+        top: 0;
+        right:0;
+        width:400px;
+      }
+</style>
+
+
+<div id="my-map"></div>
+
+
+
+
+<script src="{{ url_for('static', filename='js/googleMaps.js' )}}"></script>
 
 
 
