@@ -66,8 +66,8 @@ class Reservation(db.Model):
     user_id= db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
     timestamp = db.Column(db.String(10), nullable=False)
     party_size = db.Column(db.Integer, nullable=False)
-    reservation_status = db.Column(db.Boolean, nullable=False)
-
+    reservation_status = db.Column(db.String(15), nullable=False)
+    saved_expires = db.Column(db.DateTime, default=datetime.utcnow, nullable=True)
     
     restaurant = db.relationship('Restaurant', backref='reservations')
     user = db.relationship  ('User', backref='reservations')

@@ -3,23 +3,42 @@
 
     <h1>Login</h1>
     
-    <form action="/user_login" method="POST">
+    <form>
 
         <div>
             <label>Email:
-                <input type="email" name="email" required>
+                <input type="email" class='email' name="email" required>
             </label>
         </div>
 
         <div>
             <label>Password:
-                <input type="password" name="password" required>
+                <input type="password" class='password' name="password" required>
             </label>
         </div>
 
         <div>
-            <input type="submit" value="Log In">
+            <input class= "login" type="submit" value="Log In">
         </div>
 
     </form>
+    <script>
+    $('.login').on('click', function(){
+       $.ajax({
+         type: 'POST',
+         url: '/user_login',
+         data: {
+            email: $('.email').val(),
+            password: $('.password').val()
+         },
+         success: function(data) {
+            console.log('Received data!!', data)
+         },
+         dataType: 'json'
+       })
+    })
+
+    
+    </script>
+
 {% endblock %}

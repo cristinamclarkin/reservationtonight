@@ -2,7 +2,7 @@
 """Flask server for ReservationTonight!"""
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, request, redirect, flash, session
+from flask import Flask, render_template, request, redirect, flash, session, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, Restaurant, Reservation, User, Category, RestaurantCategory
@@ -10,10 +10,13 @@ from yelpapi import YelpAPI
 from yelp_api import filter_by_category
 from werkzeug.contrib.cache import SimpleCache
 cache = SimpleCache()
+from datetime import datetime
+from threading import Timer
+from time import sleep
 #from google_api import BROWSER_KEY
 
 
-#import threading
+
 
 
 # FLASK APP #
@@ -86,7 +89,7 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("You are now logged in")
-    return redirect("/")
+    return redirect(url_for("index", user_id=user.user_id))
 
 
 @app.route('/user_logout')
@@ -144,7 +147,7 @@ def process_new_reservation(restaurant_id):
     timestamp = request.form["timestamp"]
     print timestamp
     party_size = request.form["party_size"]
-    reservation_status = True
+    reservation_status = "Open"
     
     # reservation_status = request.form["reservation_status"]
     new_reservation = Reservation(timestamp=timestamp, party_size=party_size, reservation_status=reservation_status, restaurant_id=restaurant_id)
@@ -173,13 +176,16 @@ def process_new_reservation(restaurant_id):
 def process_user_search():
     """processes user search form""" 
     
-    print "Hello"
+    #grabs user form inputs
+
     user_party_size = request.args.get("party_size")
     user_timestamp = request.args.get("timestamp")
     category_name = request.args.get("cuisines")
+    #queries Category to macth category_name to category_d
     category_id = db.session.query(Category).filter_by(category_name=category_name).one().id
     
-    open_reservations = db.session.query(Reservation).filter_by(reservation_status=True, timestamp=user_timestamp, party_size=user_party_size).all()
+    
+    open_reservations = db.session.query(Reservation).filter_by(reservation_status="Open", timestamp=user_timestamp, party_size=user_party_size).all()
 
     matching_reservations = []
     
@@ -200,33 +206,62 @@ def process_user_search():
     for reservation in matching_reservations:
         rest_id = reservation.restaurant_id
         restaurant_info = db.session.query(Restaurant).filter_by(id=rest_id).one()
+        restaurant_info.reservation_id = reservation.id
         rest_info_list.append(restaurant_info)
 
     
 
     return render_template("search_results_form.html", user_party_size=user_party_size, matching_reservations=matching_reservations,
-                            user_timestamp=user_timestamp, category_name=category_name, category_id=category_id, rest_info_list=rest_info_list)
+                            user_timestamp=user_timestamp, category_name=category_name, category_id=category_id, rest_info_list=rest_info_list, user_id=user_id)
 
 
 
 @app.route('/reserve/<int:reservation_id>', methods=['POST'])
 def reserve_time(reservation_id):
     """Find the restaurant by restaurant id, change reservation_status to False, update in db"""
-    restaurant_to_reserve = db.session.query(Reservation).filter_by(id=reservation_id).update({'reservation_status':False})
-    
+    restaurant_to_reserve = db.session.query(Reservation).filter_by(id=reservation_id).update({'reservation_status':"Reserved"})
+    print reservation_id
     db.session.commit()
 
     print "added reservation"
     return redirect('/')
-    
+
+@app.route('/save/<int:reservation_id>/<int:user_id>', methods=['POST'])
+def hold_reservation(reservation_id, user_id):
+    """Allows user to reserve restaurant timeslot for 5 minutes"""
+    saved = datetime.utcnow() 
+    saved_plus_1 = saved + datetime.timedelta(minutes = 1)
+
+    reservation_to_hold = db.session.query(Reservation).filter_by(id=reservation_id)\
+    .update({'reservation_status':'Pending', 'user_id': user_id, 'saved_expires': saved_plus_1})
+
+    t = Timer((5 * 60), change_status(reservation_id))
+    t.start()
+
+
 
 ########################Helper fiunctions##################
-def get_bookmark():
-    rv = cache.get('reservation')
-    if rv is None:
-        rv = calculate_value()
-        cache.set('reservarion', rv, timeout=5 * 60)
-    return rv
+
+def change_status(reservation_id):
+    """change the reservation status back to open saved_expires"""
+
+    revert_to_open = db.session.query(Reservation).filter_by(id=reservation_id)\
+    .update({ 'resevation_status': 'Open', 'user_id': null})
+
+    return
+
+
+
+
+
+
+
+# def get_bookmark():
+#     rv = cache.get('reservation_id')
+#     if rv is None:
+#         rv = calculate_value()
+#         cache.set('reservarion', rv, timeout=5 * 60)
+#     return rv
 
 
 
