@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% block head %}
+  
+<title>Results</title>
+<link rel="stylesheet" href="/static/css/results_form.css">
+
+{% endblock %}
+
 {% block content %}
-
-
-
     {% for restaurant in rest_info_list %}
         <h1 class="marker-me" data-lng="{{ restaurant.longitude }}" data-lat="{{ restaurant.latitude }}"> {{ restaurant.restaurant_name }}</h1>
       
@@ -35,27 +39,17 @@
 <script   src="https://code.jquery.com/jquery-2.2.3.min.js" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAMg1Z6_0caEe3tIppNsJViX9KGSBSL3A&callback=initMap" async defer></script>
 <style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #my-map {
-        height: 500px;
-        position: absolute;
-        top: 0;
-        right:0;
-        width:400px;
-      }
+   
 </style>
 
 
-<div id="my-map"></div>
+<div class="stylizedMap" id="my-map"></div>
 
 
 
 
 <script src="{{ url_for('static', filename='js/googleMaps.js' )}}"></script>
+<link rel="stylesheet" href="/static/css/results_form.css">
 
 
 

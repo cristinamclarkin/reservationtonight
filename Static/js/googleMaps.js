@@ -7,7 +7,7 @@ function initMap(){
     document.getElementById('my-map'), 
     {
         center: {lat: 37.788862, lng: -122.411540},
-        zoom: 13
+        zoom: 12
     });
     
 }
