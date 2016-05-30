@@ -3,7 +3,7 @@
 
     <h1>Login</h1>
     
-    <form>
+    <form method="POST">
 
         <div>
             <label>Email:
@@ -23,20 +23,26 @@
 
     </form>
     <script>
-    $('.login').on('click', function(){
-       $.ajax({
-         type: 'POST',
-         url: '/user_login',
-         data: {
-            email: $('.email').val(),
-            password: $('.password').val()
-         },
-         success: function(data) {
-            console.log('Received data!!', data)
-         },
-         dataType: 'json'
-       })
-    })
+    // $('.login').on('click', function(){
+    //     console.log('clicked');
+    //    $.ajax({
+    //      type: 'POST',
+    //      url: '/user_login',
+    //      data: {
+    //         email: $('.email').val(),
+    //         password: $('.password').val()
+    //      },
+    //      success: function(data) {
+    //         console.log('Received data!!', data)
+    //      },
+    //      error: function (a,b) {
+    //          console.log(arguments);
+    //          document.body.innerHTML = a.responseText;
+    //      },
+    //      dataType: 'json'
+    //    });
+    //    return false;
+    // })
 
     
     </script>

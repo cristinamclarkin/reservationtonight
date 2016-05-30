@@ -10,7 +10,7 @@ from yelpapi import YelpAPI
 from yelp_api import filter_by_category
 from werkzeug.contrib.cache import SimpleCache
 cache = SimpleCache()
-from datetime import datetime
+from datetime import datetime, timedelta
 from threading import Timer
 from time import sleep
 #from google_api import BROWSER_KEY
@@ -87,6 +87,7 @@ def login_process():
         return redirect("/user_login")
 
     session["user_id"] = user.user_id
+    session["login_time"] = datetime.utcnow();
 
     flash("You are now logged in")
     return redirect(url_for("index", user_id=user.user_id))
@@ -198,6 +199,7 @@ def process_user_search():
         if rest_cat_id == category_id:
             matching_reservations.append(reservation)
     
+    user_id = session["user_id"]
     
     print matching_reservations
     print(user_party_size)
@@ -226,17 +228,21 @@ def reserve_time(reservation_id):
     print "added reservation"
     return redirect('/')
 
-@app.route('/save/<int:reservation_id>/<int:user_id>', methods=['POST'])
-def hold_reservation(reservation_id, user_id):
+@app.route('/save/<int:reservation_id>', methods=['POST'])
+def hold_reservation(reservation_id):
+    user_id = session['user_id']
     """Allows user to reserve restaurant timeslot for 5 minutes"""
     saved = datetime.utcnow() 
-    saved_plus_1 = saved + datetime.timedelta(minutes = 1)
+    saved_plus_1 = saved + timedelta(minutes = 1)
 
-    reservation_to_hold = db.session.query(Reservation).filter_by(id=reservation_id)\
+    db.session.query(Reservation).filter_by(id=reservation_id)\
     .update({'reservation_status':'Pending', 'user_id': user_id, 'saved_expires': saved_plus_1})
-
-    t = Timer((5 * 60), change_status(reservation_id))
+    print("result ", user_id, saved_plus_1)
+    db.session.commit()
+    t = Timer((30), change_status, [reservation_id])
     t.start()
+    # stuck HERE for 5 minutes 
+    return ('', 204)
 
 
 
@@ -245,10 +251,10 @@ def hold_reservation(reservation_id, user_id):
 def change_status(reservation_id):
     """change the reservation status back to open saved_expires"""
 
-    revert_to_open = db.session.query(Reservation).filter_by(id=reservation_id)\
-    .update({ 'resevation_status': 'Open', 'user_id': null})
-
-    return
+    db.session.query(Reservation).filter_by(id=reservation_id)\
+    .update({ 'reservation_status': 'Open', 'user_id': None})
+    db.session.commit()
+    
 
 
 
