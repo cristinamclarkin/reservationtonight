@@ -2,26 +2,38 @@
 {% block head %}
 
   <title>Reservations Tonight</title>
-  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/results_form.css">
   
 {% endblock %}
 
 {% block content %}
+<div class="activity-text" id="activity-header">
+    <h1> User Activity<h1>
+</div>
+    {% for reservation in reservations %}
+    <div class= "result" id="result-box">
+        {% if reservation.reservation_status == 'Reserved' %}
+            <h1> {{ reservation.reservation_status}} </h1>
+            <h1>{{ reservation.restaurant.restaurant_name }}</h1>
+            <h3>{{ reservation.restaurant.address_line_1 }}</h3>
+              <h3>{{ reservation.restaurant.zipcode }}</h3>
+ 
     
-{% for reservation in reservations %}
-    {% if reservation.reservation_status == 'Open' %}
-        <h1> {{ reservation.reservation_status}} </h1>
-        <h1>{{ reservation.restaurant.restaurant_name }}</h1>
-        <h3>{{ reservation.restaurant.address_line_1 }}</h3>
-        <h3>{{ reservation.restaurant.zipcode }}</h3>
     {% else %}
         <h1> {{ reservation.reservation_status}} </h1>
         <h1>{{ reservation.restaurant.restaurant_name }}</h1>
         <h3>{{ reservation.restaurant.address_line_1 }}</h3>
         <h3>{{ reservation.restaurant.zipcode }}</h3>
+            <div class="btn-style1" style="display: inline;">
+                <form action= "/reserve/{{ reservation.reservation_id }}" id="reserve" method="POST">
+                    <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
+                    </button>
+                </form>
+            </div>
     {% endif %}
+    </div>
 
 {% endfor %}
-
+</div>
 
 {% endblock %}

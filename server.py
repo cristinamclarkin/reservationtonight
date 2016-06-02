@@ -332,7 +332,7 @@ def change_status(reservation_id):
 
 
 if __name__ == "__main__":
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
