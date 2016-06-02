@@ -8,10 +8,20 @@
 
 {% block content %}
     
-    {{ % for activity in user_history %}}
-         <h3>{{ activity.restaurant_name }}</h3>
-         <h3>{{ activity.address_line_1 }}</h3>
-         <h3>{{ activity.zipcode }}</h3>
+{% for reservation in reservations %}
+    {% if reservation.reservation_status == 'Open' %}
+        <h1> {{ reservation.reservation_status}} </h1>
+        <h1>{{ reservation.restaurant.restaurant_name }}</h1>
+        <h3>{{ reservation.restaurant.address_line_1 }}</h3>
+        <h3>{{ reservation.restaurant.zipcode }}</h3>
+    {% else %}
+        <h1> {{ reservation.reservation_status}} </h1>
+        <h1>{{ reservation.restaurant.restaurant_name }}</h1>
+        <h3>{{ reservation.restaurant.address_line_1 }}</h3>
+        <h3>{{ reservation.restaurant.zipcode }}</h3>
+    {% endif %}
+
+{% endfor %}
 
 
 {% endblock %}

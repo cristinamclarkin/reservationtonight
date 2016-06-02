@@ -12,25 +12,37 @@
 
 <div class="container">
     <div class="row">
-      <div class="col-xs-12 center">
+      <div class="col-xs-12 center"> 
         <h2 id="center-header" class="center-text">Search for Open Reservations</h2>
-        <form id="search-form" class="form-inline" action="/search" method="GET">
-          
+      </div>
+        
           <!-- Keyword -->
+    <div class="col-sm-3">
           <div class="input-group input-group-sm form-group">
-            <span class="input-group-addon" id="for-restaurant">Party Size:</span>
-            <input type="text" class="form-control" name="party_size" 
-              placeholder="Party Size"aria-describedby="Party Size" required>
+            <form id="search-form" class="form-inline" action="/search" method="GET">
+              <span class="input-group-addon" id="for-restaurant">Party Size:</span>
+              <input type="text" class="form-control" name="party_size" 
+                placeholder="Party Size"aria-describedby="Party Size" required>
           </div>
+    </div>
 
-          <!-- Location -->
+            <!-- Location -->
+    <div class="col-sm-3">
           <div class="input-group input-group-sm form-group">
-            <span class="input-group-addon" id="near-location">Cuisine:</span>
-            <input type="text" class="form-control" name="Cuisine" 
-              placeholder="Cuisine" aria-describedby="Cuisine">
+              <span class="input-group-addon" id="near-location">Cuisine:</span>
+              <input type="text" class="form-control" name="Cuisine" 
+                placeholder="Cuisine" aria-describedby="Cuisine">
           </div>
-
-        </form>
+    </div>
+     <div class="col-sm-3">
+          <div class="input-group input-group-sm form-group">
+              <span class="input-group-addon" id="near-location">Time:</span>
+              <input type="text" class="form-control" name="Time" 
+                placeholder="Time" aria-describedby="Time">
+          </div>
+    </div>
+      <button type="submit" class="btn btn-default btn-primary">Search Again</button>
+          </form>
       </div> <!-- col-xs-12 center -->
     </div> <!-- row -->
   </div> <!-- container -->
@@ -58,17 +70,18 @@
              <h3>{{ restaurant.zipcode }}</h3>
              <!-- <h3>{{ restaurant.yelp_url }}</h3> -->
             <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
-              <form action= "/reserve/{{ restaurant.reservation_id }}" id="reserve" method="POST">
-                <span style="display: inline;">
-                <div>
+              <div class="btn-style1" style="display: inline;">
+                <form action= "/reserve/{{ restaurant.reservation_id }}" id="reserve" method="POST">
                     <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
                     </button>
-                </div>
-              </form>
-              <form action = '/save/{{ restaurant.reservation_id }}' id="save" method="POST">
-                  <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Save</button>
-                </span>
-              </form>
+                </form>
+              </div>
+              <div class="btn-style2" style="display: inline;">
+                <form action = '/save/{{ restaurant.reservation_id }}' id="save" method="POST">
+                    <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Save</button>
+                  </span>
+                </form>
+              </div>
             
                 <script type="text/javascript">
                 $(document).ready(function() {

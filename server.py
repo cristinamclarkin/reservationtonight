@@ -138,23 +138,34 @@ def logout():
     return redirect("/")
 
 
-@app.route("/users/<int:user_id>")
-def user_details(user_id):
+@app.route("/user")
+def user_details():
     """Show info about user."""
 
     # user = User.query.filter_by(email=email).first()
     user_id = session["user_id"]
-
-   
-    user_history = []
-    user_activity = db.session.query(Reservation).filter_by(user_id=user_id).all()
-    for activity in user_activity:
-        rest_name = db.session.query(Restaurant).filter_by(restaurant_id=activity.restaurant_id).first().restaurant_name
-        if rest_name == restaurant_name:
-            user_history.append(activity)
+    user = User.query.get(user_id)
 
 
-        return render_template("user_info.html", user_id=user_id, user_history=user_history, user_activity=user_activity)
+    # restaurants = []
+    reservations = user.reservations
+    # for reservation in reservations:
+    #     restaurants.append(reservation.restaurant)
+        
+
+    
+
+
+    
+    # user_history = []
+    # user_activity = db.session.query(Reservation).filter_by(user_id=user_id).all()
+    # for activity in user_activity:
+    #     rest_name = db.session.query(Restaurant).filter_by(restaurant_id=activity.restaurant_id).first().restaurant_name
+    #     if rest_name == restaurant_name:
+    #         user_history.append(activity)
+
+
+    return render_template("user_info.html", reservations=reservations)
 
 
 @app.route('/restaurant_login', methods=['GET'])

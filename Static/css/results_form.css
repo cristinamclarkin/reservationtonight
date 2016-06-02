@@ -31,32 +31,21 @@ html, body {
   font-family: Raleway
   font-size: 60px;
 }
-.open_status {
-  text-align: right;
-  font-style: italic;
-  margin-bottom: 0;
-  margin-top: 5px;
-}
 
-#wait_info {
-  display: inline-block;
-  margin: 5px;
-}
-
-#yelp_info {
-  display: inline-block;
-  text-align: right;
-  float: right;
-  padding-top: 30px;
-}
 .btn-lg {
   color: #FFFFFF;
   background-color: #e73f3f;
   border-color: #c31502;
-  margin-right: 15%;
-  display: inline-block;
 }
 
+.btn-style1 {
+  /*margin: 0 auto 0 auto;*/
+  display: inline-block;
+}
+.btn-style2 {
+  /*margin: 0 auto 0 auto;*/
+  display: inline-block;
+}
 
 #result-box {
   /*display: inline-block;*/
