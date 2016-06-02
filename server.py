@@ -139,12 +139,22 @@ def logout():
 
 
 @app.route("/users/<int:user_id>")
-def user_detail(user, user_id):
+def user_details(user_id):
     """Show info about user."""
 
-    user = User.query.filter_by(email=email).first()
+    # user = User.query.filter_by(email=email).first()
     user_id = session["user_id"]
-    return render_template("user_info.html", user=user, user_id=user_id)
+
+   
+    user_history = []
+    user_activity = db.session.query(Reservation).filter_by(user_id=user_id).all()
+    for activity in user_activity:
+        rest_name = db.session.query(Restaurant).filter_by(restaurant_id=activity.restaurant_id).first().restaurant_name
+        if rest_name == restaurant_name:
+            user_history.append(activity)
+
+
+        return render_template("user_info.html", user_id=user_id, user_history=user_history, user_activity=user_activity)
 
 
 @app.route('/restaurant_login', methods=['GET'])
@@ -230,7 +240,7 @@ def process_user_search():
     #returns a list of reservation objects in the form [{Id:1,restaurant_id:1, user_id:23, timestamp:5 pm, partysize: 2}...]
     for reservation in open_reservations:
         # print(vars(reservation))
-        #returns rows in reservation_categories table where restaurant id matches reservation.restaurant_id
+        #returns rows in restaurant_categories table where restaurant id matches reservation.restaurant_id
         rest_cat_id= db.session.query(RestaurantCategory).filter_by(restaurant_id=reservation.restaurant_id).first().category_id
         print(vars(reservation))
         if rest_cat_id == category_id:
@@ -258,7 +268,8 @@ def process_user_search():
 @app.route('/reserve/<int:reservation_id>', methods=['POST'])
 def reserve_time(reservation_id):
     """Find the restaurant by restaurant id, change reservation_status to False, update in db"""
-    restaurant_to_reserve = db.session.query(Reservation).filter_by(id=reservation_id).update({'reservation_status':"Reserved"})
+    user_id = session['user_id']
+    restaurant_to_reserve = db.session.query(Reservation).filter_by(id=reservation_id).update({'reservation_status':"Reserved",'user_id': user_id})
     print reservation_id
     db.session.commit()
 

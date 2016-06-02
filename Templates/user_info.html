@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head %}
+
+  <title>Reservations Tonight</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  
+{% endblock %}
+
+{% block content %}
+    
+    {{ % for activity in user_history %}}
+         <h3>{{ activity.restaurant_name }}</h3>
+         <h3>{{ activity.address_line_1 }}</h3>
+         <h3>{{ activity.zipcode }}</h3>
+
+
+{% endblock %}

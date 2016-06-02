@@ -1,0 +1,99 @@
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#my-map {
+  height: 500px;
+  /*position: absolute;
+  top: 0;
+  right:0;
+  width:400px;*/
+  padding: 0 15px 15px 15px;
+}
+
+#result-header {
+  text-align: center;
+}
+
+#list {
+  height: 500px;
+  overflow: scroll;
+}
+
+ #center-header {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+.center-text {
+  font-family: Raleway
+  font-size: 60px;
+}
+.open_status {
+  text-align: right;
+  font-style: italic;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+#wait_info {
+  display: inline-block;
+  margin: 5px;
+}
+
+#yelp_info {
+  display: inline-block;
+  text-align: right;
+  float: right;
+  padding-top: 30px;
+}
+.btn-lg {
+  color: #FFFFFF;
+  background-color: #e73f3f;
+  border-color: #c31502;
+  margin-right: 15%;
+  display: inline-block;
+}
+
+
+#result-box {
+  /*display: inline-block;*/
+  text-align: center;
+  padding-right: 5px;
+  border-right: 1px solid gray;
+}
+
+
+.result {
+  padding: 0 10px 10px 10px;
+  border: 2px solid #F0F0F0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.center {
+  text-align: center;
+  }
+
+#search-form {
+  vertical-align: top;
+}
+
+.btn-group-vertical {
+  vertical-align: top;
+}
+
+#restaurant_name {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.highlight {
+  color: #e79c0c;
+}
+
+#address {
+  margin-bottom: 5px;
+}
