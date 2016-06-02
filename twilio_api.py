@@ -14,7 +14,7 @@ TWILIO_NUMBER = os.environ['TWILIO_NUMBER']
 client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
 
-def send_reminder_sms(phone_number, restaurant_name, quoted_time):
+def send_reminder_sms(phone_number, restaurant_name):
     """Sends reminder sms to the user upon reserving time slot."""
 
     body = ("Thanks for booking with %s."

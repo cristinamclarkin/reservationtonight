@@ -73,8 +73,39 @@ def login_process():
     """Process login."""
 
     # Get form variables
-    email = request.form["email"]
-    password = request.form["password"]
+    # email = request.form["email"]
+    # password = request.form["password"]
+
+    # email = request.form.get('email')
+    # password = request.form.get('password')
+
+    # # gets a user object from the database by email
+    # user = db.session.query(User).filter(User.email == email).first()
+
+    # # handles login of existing user
+    # if user:
+    #     if password == user.password:
+    #         # flash message
+    #         # return render_template("homepage.html")
+    #         # add username to session
+    #         flash("Successfully logged in.")
+    #         session["user_id"] = user.user_id
+    #         session["login_time"] = datetime.utcnow();
+    #         session['logged_in_email'] = user.email
+    #         #session['logged_in_user_id'] = db_user.user_id
+    
+    #         return redirect("/index/"+str(user.user_id))
+
+    # elif not user:
+    #     flash("No such user")
+    #     return redirect("/user_login")
+
+    # elif user.password != password:
+    #     flash("Incorrect password")
+    #     return redirect("/user_login")
+
+    email = request.form.get("email")
+    password = request.form.get("password")
 
     user = User.query.filter_by(email=email).first()
 
@@ -87,10 +118,15 @@ def login_process():
         return redirect("/user_login")
 
     session["user_id"] = user.user_id
+    session["email"]= user.email
     session["login_time"] = datetime.utcnow();
 
     flash("You are now logged in")
-    return redirect(url_for("index", user_id=user.user_id))
+    return redirect(url_for("index", user=user, email=user.email, user_id=user.user_id))
+
+
+
+    
 
 
 @app.route('/user_logout')
@@ -103,11 +139,12 @@ def logout():
 
 
 @app.route("/users/<int:user_id>")
-def user_detail(user_id):
+def user_detail(user, user_id):
     """Show info about user."""
 
-    user = User.query.get(user_id)
-    return render_template("user_info.html", user=user)
+    user = User.query.filter_by(email=email).first()
+    user_id = session["user_id"]
+    return render_template("user_info.html", user=user, user_id=user_id)
 
 
 @app.route('/restaurant_login', methods=['GET'])

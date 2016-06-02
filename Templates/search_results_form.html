@@ -7,34 +7,89 @@
 {% endblock %}
 
 {% block content %}
-    {% for restaurant in rest_info_list %}
-        <h1 class="marker-me" data-lng="{{ restaurant.longitude }}" data-lat="{{ restaurant.latitude }}"> {{ restaurant.restaurant_name }}</h1>
-      
-         <h3>{{ restaurant.address_line_1 }}</h3>
-         <h3>{{ restaurant.address_line_2 }}</h3>
-         <h3>{{ restaurant.zipcode }}</h3>
-         <h3>{{ restaurant.telephone }}</h3>
-         <h3>{{ restaurant.reservation_id }}</h3>
-        <!--  <h3>{{ restaurant.yelp_url }}</h3> -->
-        <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
-        <form action= "/reserve/{{ restaurant.reservation_id }}" id="reserve" method="POST">
-          <div>
-              <button type="button" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Reserve
-                <input type="submit" value="Reserve">
-              </button>
-          </div>
-        </form>
-        <form action = '/save/{{ restaurant.reservation_id }}' id="save" method="POST">
-              <button type="button" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Save
-                <input type="submit" value="Save">
-              </button>
-        </form>
+  
+  <form action="/search" id="search-form" method="GET">
 
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 center">
+        <h2 id="center-header" class="center-text">Search for Open Reservations</h2>
+        <form id="search-form" class="form-inline" action="/search" method="GET">
+          
+          <!-- Keyword -->
+          <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon" id="for-restaurant">Party Size:</span>
+            <input type="text" class="form-control" name="party_size" 
+              placeholder="Party Size"aria-describedby="Party Size" required>
+          </div>
+
+          <!-- Location -->
+          <div class="input-group input-group-sm form-group">
+            <span class="input-group-addon" id="near-location">Cuisine:</span>
+            <input type="text" class="form-control" name="Cuisine" 
+              placeholder="Cuisine" aria-describedby="Cuisine">
+          </div>
+
+        </form>
+      </div> <!-- col-xs-12 center -->
+    </div> <!-- row -->
+  </div> <!-- container -->
+
+    
+<!-- RESULTS-->
+  
+  <div class="container">
+    <div class="row">
+
+      <!-- MAP -->
+      <div id="my-map" class="col-xs-12 col-md-6">
+        <div id="my-map"></div>
+      </div>
+
+      <!-- LIST RESULTS -->
+      
+      <div class="col-xs-12 col-md-6" id="list">   
+
+        {% for restaurant in rest_info_list %}
+          <div class= "result" id="result-box">
+            <h1 class="marker-me" data-lng="{{ restaurant.longitude }}" data-lat="{{ restaurant.latitude }}"> {{ restaurant.restaurant_name }}</h1>
+             <h3>{{ restaurant.address_line_1 }}</h3>
+             <h3>{{ restaurant.address_line_2 }}</h3>
+             <h3>{{ restaurant.zipcode }}</h3>
+             <!-- <h3>{{ restaurant.yelp_url }}</h3> -->
+            <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
+              <form action= "/reserve/{{ restaurant.reservation_id }}" id="reserve" method="POST">
+                <span style="display: inline;">
+                <div>
+                    <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
+                    </button>
+                </div>
+              </form>
+              <form action = '/save/{{ restaurant.reservation_id }}' id="save" method="POST">
+                  <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Save</button>
+                </span>
+              </form>
+            
+                <script type="text/javascript">
+                $(document).ready(function() {
+                $('.result').bind("mouseover", function(){
+                    var color  = $(this).css("background-color");
+
+                    $(this).css("border", "2px solid deeppink");
+
+                    $(this).bind("mouseout", function(){
+                        $(this).css("border", "2px solid #F0F0F0");
+                    })    
+                })    
+            })
+              </script>
+            </div>
+
+        
+   
 
     {% endfor %}
-
+ </div>
 <title>Google Map: Results Page</title>
 <script   src="https://code.jquery.com/jquery-2.2.3.min.js" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAMg1Z6_0caEe3tIppNsJViX9KGSBSL3A&callback=initMap" async defer></script>

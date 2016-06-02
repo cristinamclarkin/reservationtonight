@@ -13,6 +13,10 @@ function initMap(){
 }
 
 function addMarker(evt){
+    //check if marker is within bounds, else move it 
+
+    var infoWindow = new google.maps.InfoWindow();
+    var bounds = new google.maps.LatLngBounds();
     var latFromDom = $(this).data('lat');
     console.log(latFromDom)
     var lngFromDom = $(this).data('lng');
@@ -26,7 +30,10 @@ function addMarker(evt){
                 title: 'Hello World!'
             }
     );
+    bounds.extend(marker.position);
     console.log(marker)
+    map.fitBounds(bounds);
+    map.setZoom(13)
 }
 function removeMarkers(evt){
     marker.setMap(null);
