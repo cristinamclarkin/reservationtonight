@@ -13,6 +13,7 @@ cache = SimpleCache()
 from datetime import datetime, timedelta
 from threading import Timer
 from time import sleep
+import sys
 #from google_api import BROWSER_KEY
 
 
@@ -240,9 +241,12 @@ def process_user_search():
     user_party_size = request.args.get("party_size")
     user_timestamp = request.args.get("timestamp")
     category_name = request.args.get("cuisines")
+    sort_by = request.args.get("sort_by")
+    neighborhood = request.args.get("filter_by_neighborhood")
     #queries Category to macth category_name to category_d
+    # print "xxxx"
+    # sys.stdout.flush()
     category_id = db.session.query(Category).filter_by(category_name=category_name).one().id
-    
     
     open_reservations = db.session.query(Reservation).filter_by(reservation_status="Open", timestamp=user_timestamp, party_size=user_party_size).all()
 
@@ -252,27 +256,49 @@ def process_user_search():
     for reservation in open_reservations:
         # print(vars(reservation))
         #returns rows in restaurant_categories table where restaurant id matches reservation.restaurant_id
-        rest_cat_id= db.session.query(RestaurantCategory).filter_by(restaurant_id=reservation.restaurant_id).first().category_id
+        rest_cat_id = db.session.query(RestaurantCategory).filter_by(restaurant_id=reservation.restaurant_id).first().category_id
         print(vars(reservation))
         if rest_cat_id == category_id:
             matching_reservations.append(reservation)
     
     user_id = session["user_id"]
     
-    print matching_reservations
-    print(user_party_size)
     
     rest_info_list = []
+    neighborhoods = []
     for reservation in matching_reservations:
         rest_id = reservation.restaurant_id
         restaurant_info = db.session.query(Restaurant).filter_by(id=rest_id).one()
         restaurant_info.reservation_id = reservation.id
+        if restaurant_info.address_line_2 not in neighborhoods:
+            neighborhoods.append(restaurant_info.address_line_2)
+        if neighborhood:
+            if restaurant_info.address_line_2 != neighborhood:
+                continue
         rest_info_list.append(restaurant_info)
+
+
+    if sort_by == "rating":
+        rest_info_list = sorted(rest_info_list, key = lambda r: r.yelp_rating, reverse = True)
+
+    if sort_by == "review_count":
+        rest_info_list = sorted(rest_info_list, key = lambda r: r.yelp_reviews, reverse = True)
 
     
 
-    return render_template("search_results_form.html", user_party_size=user_party_size, matching_reservations=matching_reservations,
-                            user_timestamp=user_timestamp, category_name=category_name, category_id=category_id, rest_info_list=rest_info_list, user_id=user_id)
+
+
+
+    return render_template("search_results_form.html",
+     args=request.args,
+     user_party_size=user_party_size,
+     matching_reservations=matching_reservations,
+     user_timestamp=user_timestamp,
+     category_name=category_name,
+     category_id=category_id,
+     rest_info_list=rest_info_list,
+     neighborhoods = neighborhoods,
+     user_id=user_id)
 
 
 
@@ -313,7 +339,12 @@ def change_status(reservation_id):
     db.session.query(Reservation).filter_by(id=reservation_id)\
     .update({ 'reservation_status': 'Open', 'user_id': None})
     db.session.commit()
-    
+
+
+   
+
+
+
 
 
 
@@ -332,7 +363,7 @@ def change_status(reservation_id):
 
 
 if __name__ == "__main__":
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 

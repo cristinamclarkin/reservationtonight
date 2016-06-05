@@ -8,7 +8,7 @@
 
 {% block content %}
   
-  <form action="/search" id="search-form" method="GET">
+  <form action="/search" id="search-form" class="form-inline" method="GET">
 
 <div class="container">
     <div class="row">
@@ -17,35 +17,76 @@
       </div>
         
           <!-- Keyword -->
-    <div class="col-sm-3">
+    <div class="col-sm-2">
           <div class="input-group input-group-sm form-group">
             <form id="search-form" class="form-inline" action="/search" method="GET">
-              <span class="input-group-addon" id="for-restaurant">Party Size:</span>
-              <input type="text" class="form-control" name="party_size" 
+              <span class="input-group-addon" id="party_size">Party Size:</span>
+              <input type="text" class="form-control" value="{{ args.party_size }}" name="party_size" 
                 placeholder="Party Size"aria-describedby="Party Size" required>
           </div>
     </div>
 
             <!-- Location -->
-    <div class="col-sm-3">
+    <div class="col-sm-2">
           <div class="input-group input-group-sm form-group">
               <span class="input-group-addon" id="near-location">Cuisine:</span>
-              <input type="text" class="form-control" name="Cuisine" 
+              <input type="text" value="{{ args.cuisines }}" class="form-control" name="cuisines" 
                 placeholder="Cuisine" aria-describedby="Cuisine">
           </div>
     </div>
-     <div class="col-sm-3">
+     <div class="col-sm-2">
           <div class="input-group input-group-sm form-group">
               <span class="input-group-addon" id="near-location">Time:</span>
-              <input type="text" class="form-control" name="Time" 
+              <input type="text" class="form-control" value="{{ args.timestamp }}" name="timestamp" 
                 placeholder="Time" aria-describedby="Time">
           </div>
     </div>
-      <button type="submit" class="btn btn-default btn-primary">Search Again</button>
+      <div class="col-sm-1">
+        <div class="btn-group-vertical" role="group" data-toggle="buttons" aria-label="sorting_by">
+          <button class="sort_by_btn btn btn-default btn-sm">Sort</button>
+          <label class="btn btn-primary btn-sm show_radio">
+            <input type="radio" name="sort_by" autocomplete="off" 
+              value="rating">Highest Rating
+          </label>
+          <label class="btn btn-primary btn-sm show_radio">
+            <input type="radio" name="sort_by" autocomplete="off" 
+              value="review_count">Most Reviews
+          </label>
+        </div>
+      </div>
+    <div class="col-sm-1">
+      <div class="btn-group-vertical filter-group" role="group" data-toggle="buttons" aria-label="filter_by">
+          <button class="sort_by_btn btn btn-default btn-sm">Filter</button>
+            {% for neighborhood in neighborhoods %}
+
+                <label class="btn btn-primary btn-sm show_radio">
+                  <input type="radio" name="filter_by_neighborhood" autocomplete="off" 
+                    value="{{ neighborhood }}"> {{ neighborhood }}
+                </label>
+            {% endfor %}
+      </div>
+    </div>
+          <div class="col-sm-2">
+            <button type="submit" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </button>
           </form>
       </div> <!-- col-xs-12 center -->
     </div> <!-- row -->
   </div> <!-- container -->
+  <script type="text/javascript">
+    $(".show_radio").hide();
+
+    function toggleRadioBtns(evt) {
+      $(this).nextAll('label').toggle();
+    }
+
+    $('label.show_radio').click(function  () {
+      $('.show_radio').hide();
+    })
+
+    $(".sort_by_btn").click(toggleRadioBtns);
+  </script>
 
     
 <!-- RESULTS-->
@@ -59,7 +100,7 @@
       </div>
 
       <!-- LIST RESULTS -->
-      
+      {% if rest_info_list|length > 0 %}
       <div class="col-xs-12 col-md-6" id="list">   
 
         {% for restaurant in rest_info_list %}
@@ -68,20 +109,22 @@
              <h3>{{ restaurant.address_line_1 }}</h3>
              <h3>{{ restaurant.address_line_2 }}</h3>
              <h3>{{ restaurant.zipcode }}</h3>
+             <h3> {{ restaurant.yelp_rating }}</h3>
+             <h3> {{ restaurant.yelp_reviews }}</h3>
              <!-- <h3>{{ restaurant.yelp_url }}</h3> -->
             <h3><a href= "/search/{{ restaurant.yelp_url }}">Yelp Listing</a></h3>
-              <div class="btn-style1" style="display: inline;">
+            <div class="reservesave" style="display: inline-block;">
+              <div class="btn-style1" >
                 <form action= "/reserve/{{ restaurant.reservation_id }}" id="reserve" method="POST">
                     <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
-                    </button>
                 </form>
               </div>
-              <div class="btn-style2" style="display: inline;">
+              <div class="btn-style2">
                 <form action = '/save/{{ restaurant.reservation_id }}' id="save" method="POST">
                     <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Save</button>
-                  </span>
                 </form>
               </div>
+            </div>
             
                 <script type="text/javascript">
                 $(document).ready(function() {
@@ -102,7 +145,10 @@
    
 
     {% endfor %}
- </div>
+   </div>
+  {% else %}
+    <h1>No results found</h1> 
+  {% endif %}
 <title>Google Map: Results Page</title>
 <script   src="https://code.jquery.com/jquery-2.2.3.min.js" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAMg1Z6_0caEe3tIppNsJViX9KGSBSL3A&callback=initMap" async defer></script>

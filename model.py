@@ -21,6 +21,8 @@ class Restaurant(db.Model):
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
     yelp_url = db.Column(db.String(200), nullable=True)
+    yelp_rating = db.Column(db.Float, nullable=True)
+    yelp_reviews = db.Column(db.Integer, nullable=True)
 
     categories = db.relationship("Category", secondary="restaurant_categories", backref="restaurants")
 

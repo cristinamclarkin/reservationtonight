@@ -42,6 +42,8 @@ def load_restaurants(results):
         longitude =business['location']["coordinate"]["longitude"]
         yelp_url = business["url"]
         telephone = business.get("phone", '')
+        yelp_rating = business["rating"]
+        yelp_reviews = business.get("review_count", '')
 
         #business_categories = get_categories(business["categories"])
 
@@ -53,7 +55,9 @@ def load_restaurants(results):
                                     telephone=telephone,
                                     latitude=latitude,
                                     longitude=longitude,
-                                    yelp_url=yelp_url)
+                                    yelp_url=yelp_url,
+                                    yelp_rating=yelp_rating,
+                                    yelp_reviews=yelp_reviews)
                                     
 
 

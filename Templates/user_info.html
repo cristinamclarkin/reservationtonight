@@ -25,7 +25,7 @@
         <h3>{{ reservation.restaurant.address_line_1 }}</h3>
         <h3>{{ reservation.restaurant.zipcode }}</h3>
             <div class="btn-style1" style="display: inline;">
-                <form action= "/reserve/{{ reservation.reservation_id }}" id="reserve" method="POST">
+                <form action= "/reserve/{{ reservation.id }}" id="reserve" method="POST">
                     <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
                     </button>
                 </form>

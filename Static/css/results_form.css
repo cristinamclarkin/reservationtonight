@@ -15,7 +15,7 @@ html, body {
 #activity-header {
   padding-bottom: 10px;
   /*color: #cc44dd;*/
-  color: black;
+  color: black; 
 }
 
 
@@ -26,6 +26,7 @@ html, body {
   right:0;
   width:400px;*/
   padding: 0 15px 15px 15px;
+  margin-top: 2%
 }
 
 #result-header {
@@ -35,6 +36,7 @@ html, body {
 #list {
   height: 500px;
   overflow: scroll;
+  margin-top: 2%
 }
 
  #center-header {
@@ -45,6 +47,7 @@ html, body {
 .center-text {
   font-family: Raleway
   font-size: 60px;
+  margin-right: 20%;
 }
 
 .btn-lg {
@@ -85,10 +88,35 @@ html, body {
 
 #search-form {
   vertical-align: top;
+  padding-left: 15%;
+}
+
+#sort_by_btn {
+  color: #FFFFFF;
+  background-color: #e73f3f;
+  border-color: #c31502;
+  border-radius: 4px;
+}
+
+.col-sm-2 {
+  padding-right: 0px;
 }
 
 .btn-group-vertical {
   vertical-align: top;
+  position: absolute;
+  top: 0;
+  left: 15px;
+  z-index: 9;
+  min-width: 101px;
+}
+
+.btn-group-vertical.filter-group {
+  left: 30px;
+}
+
+button[type="submit"] {
+  margin-left: 25%;
 }
 
 #restaurant_name {
