@@ -3,6 +3,11 @@ html, body {
   height: 100%;
 }
 
+/*.background-image {
+  
+}*/
+
+
 .header-text{
   font-weight: 900;
   text-align: center;
@@ -80,6 +85,7 @@ html, body {
   background-color: #e73f3f;
   border-color: #c31502;
   margin-right: 15%;
+  font-family: 'Arvo', serif;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
   color: #FFFFFF !important;
@@ -90,8 +96,8 @@ html, body {
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #e3e3e3;
-  font-family: Raleway, sans-serif;
+  /*background-color: #e3e3e3;*/
+  font-family: 'Arvo', serif;
 }
  
 .carousel {

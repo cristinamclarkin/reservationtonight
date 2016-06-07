@@ -1,0 +1,9 @@
+body {
+  background-image: url(Neon-7_900.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #000;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
