@@ -31,11 +31,11 @@ To minimize latency, restaurant information is drawn from Yelp's API and stored 
 
 #### Sort and Filter
 For more tailored results, users can sort by highest Yelp rating and most reviews, and filter by neighborhood. The list of available neighborhoods is dynamic and dependent upon the results returned.
-<img src="/static/img/sort_filter.gif" alt="Sort and Filter">
+<img src="/static/images/sort_filter.gif" alt="Sort and Filter">
 
 ### Reserving and Saving 
 Often, there is an intermediary step between reserving and confirming on booking sites. To address this logistical concern, users can opt to either reserve an open reservation now or save a reservation for up to 15 minutes. Saving is handled using the timer module imported from the Python threading library. Saving a reservation changes the status of the reservation in the database to 'pending' and temporarily removes it from view. This prevents the reservation from being returned in another user's search. If a user decides to reserve that particular reservation before the alloted time has expired, she can do so from the user information page, which logs all user activity, past and present.
-<img src="/static/img/reserve_save.gif" alt="Report">
+<img src="/static/images/reserve_save.gif" alt="Report">
 
 ### Text Reminder
 After reserving a table, users can enter their phone number to receive text notifications for reminders with the reservation time and location. 
