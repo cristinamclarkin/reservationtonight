@@ -23,7 +23,7 @@ Restaurants log in and add available reservations. Available reservations are th
 
 ### User Search
 Users can register, sign in, and search by party size, cuisine, and desired reservation tonight time.
-<img src="/static/images/home_page.gif" alt="Reservations Tonight">
+<img src="https://github.com/cristinamclarkin/reservationtonight/blob/master/Static/images/home_page.gif">
 
 ### Results
 To minimize latency, restaurant information is drawn from Yelp's API and stored in Reservation Tonight's database. The browser receives the response from the server and renders a map and list of restaurants matching the user's criteria. Users can scroll through the list to dynamically render a marker at the restaurant's location on the map. Users can weigh the factors of ratings, reviews and proximity to choose a restaurant.  
