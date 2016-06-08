@@ -7,7 +7,9 @@ html, body {
   
 }*/
 
-
+a {
+  color: white;
+}
 .header-text{
   font-weight: 900;
   text-align: center;
@@ -55,11 +57,11 @@ html, body {
 
 .navbar-brand {
   padding: 0;
-  padding-left: 8px;
+  padding-left: 10px;
 }
 
-.navbar {
-  background-color:#E6DBE6;
+/*.navbar {
+  background-color:#E6DBE6;*/
   /*border-bottom: 5px solid #cc0088;*/
 }
 
@@ -67,17 +69,19 @@ html, body {
   background-color: #cc0088;
 }*/
 
-.navbar-nav > li > a {
+/*.navbar-nav > li > a {
   color: #FFFFFF;
-}
+}*/
 
 .navbar-nav .nav-pills .active a {
-  background-color: yellow;
+  background-color: blue;
+  color:white;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-   color:white;
-   background-color:black ;
+   color: white;
+   background-color:#000;
+   border-color: white;
    }
 
 .btn-primary {
@@ -96,7 +100,6 @@ html, body {
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  /*background-color: #e3e3e3;*/
   font-family: 'Arvo', serif;
 }
  

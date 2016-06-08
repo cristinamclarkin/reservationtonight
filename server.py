@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from threading import Timer
 from time import sleep
 import sys
+import time
 #from google_api import BROWSER_KEY
 
 
@@ -150,6 +151,9 @@ def user_details():
 
     # restaurants = []
     reservations = user.reservations
+
+    for reservation in reservations:
+        reservation.saved_expires += timedelta(0, -7*3600)
     # for reservation in reservations:
     #     restaurants.append(reservation.restaurant)
         
@@ -363,7 +367,7 @@ def change_status(reservation_id):
 
 
 if __name__ == "__main__":
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 

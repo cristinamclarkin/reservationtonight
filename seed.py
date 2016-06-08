@@ -1,7 +1,8 @@
 from sqlalchemy import func
 from flask import session
 
-from datetime import datetime 
+from datetime import datetime
+import time
 from model import connect_to_db, db, Restaurant, Reservation, User, Category, RestaurantCategory
 from yelp_api import filter_by_category
 

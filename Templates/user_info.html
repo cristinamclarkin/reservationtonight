@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="/static/css/results_form.css">
     <style>
         body {
-            background-image: url("static/images/Neon-7_900.png");
+            background-image: url("http://payload403.cargocollective.com/1/6/213784/10366094/Neon-7_900.jpg");
             background-size: cover;
         }
     </style>
@@ -13,50 +13,71 @@
 
 {% block content %}
 
-    <div class="activity-text" id="activity-header">
-        <h1> User Activity<h1>
-    </div>
+    <div class="container">
+        <div class="row .col-sm-5 .col-sm-offset-2 .col-md-6 .col-md-offset-0">
 
         <div class= "activity">
             <div class="container">
 
                 <table class="table table-hover">
-                    <tbody>
+                    <thead>
+                        <div class="activity-text" id="activity-header">
+                            <h1>Activity Log<h1>
+                        </div>
+                    </thead>
+                        <tbody>
+                    <div class="header">
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Restaurant</th>
+                            <th>Zipcode</th>
+                            <th>Party Size</th>
+                            
+                        </tr>
+                    </div>
 
-                {% for reservation in reservations %}
-                    {% if reservation.reservation_status == 'Reserved' %}
+                    {% for reservation in reservations %}
+                        {% if reservation.reservation_status == 'Reserved' %}
+                        <tr>
+                                <td>{{reservation.saved_expires.strftime('%m/%d/%Y')}}</td>
+                                <td>{{reservation.saved_expires.strftime('%I:%M')}}</td>
+                                <td>{{ reservation.reservation_status}}</td>
+                                <td>{{ reservation.restaurant.restaurant_name }}</td>
+                                <td>{{ reservation.restaurant.zipcode }}</td>
+                                <td>{{ reservation.party_size }}</td>
+                                
+                        </tr>
 
-                            <td>{{reservation.saved_expires}}</td>
-                            <td>{{ reservation.reservation_status}}</td>
+         
+            
+                    {% else %}
+                        <tr>
+                            <td>{{reservation.saved_expires.strftime('%m/%d/%Y')}}</td>
+                            <td>{{reservation.saved_expires.strftime('%I:%M')}}</td>
+                            <td>{{ reservation.reservation_status}} </td>
                             <td>{{ reservation.restaurant.restaurant_name }}</td>
-                            <td>{{ reservation.restaurant.address_line_1 }}</td>
                             <td>{{ reservation.restaurant.zipcode }}</td>
                             <td>{{ reservation.party_size }}</td>
+                            <td>
+                                    <form action= "/reserve/{{ reservation.id }}" id="reserve" method="POST">
+                                        <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
+                                        </button>
+                                    </form>
+                                </td>
                         </tr>
+                        {% endif %}
+                    {% endfor %}
 
-     
-        
-                {% else %}
-                    <tr>
-                        <td> {{ reservation.reservation_status}} </td>
-                        <td>{{ reservation.restaurant.restaurant_name }}</td>
-                        <td>{{ reservation.restaurant.address_line_1 }}</td>
-                        <td>{{ reservation.restaurant.zipcode }}</td>
-                            <div class="btn-style1" style="display: inline;">
-                                <form action= "/reserve/{{ reservation.id }}" id="reserve" method="POST">
-                                    <button type="submit" class="btn btn-default btn-lg" style="display:inline;">Reserve</button>
-                                    </button>
-                                </form>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-
-                </tbody>
+                    </tbody>
                 </table>
                 </div>
         
-        </div>
+            </div>
 
+        </div>
     </div>
+</div>
 
 {% endblock %}
