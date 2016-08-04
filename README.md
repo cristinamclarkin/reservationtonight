@@ -48,4 +48,3 @@ past selections
 
 ## Author
 Cristina Clarkin
-https://www.linkedin.com/in/cristina-clarkin
